@@ -1,0 +1,108 @@
+:root {
+	--border-radius: 7px;
+	--border-color: #69caf7;
+	--background-color: rgba(245, 241, 236, 0.829);
+}
+
+body {
+	font-family: "Merienda", serif;
+	background-color: var(--background-color);
+	border: 2px solid;
+	border-color: var(--border-color);
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+}
+
+.container {
+	margin: 50px;
+	width: 500px;
+	height: max-content;
+	border: 2px solid purple;
+	border-radius: var(--border-radius);
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 25px;
+	font-weight: bold;
+}
+
+img {
+	width: 100px;
+}
+
+header {
+	display: flex;
+	align-items: center;
+}
+
+.btn-submit {
+	margin-top: 15px;
+	border: none;
+	border-radius: var(--border-radius);
+	padding: 7px 15px;
+	color: white;
+	background-color: rgb(37, 37, 37);
+}
+
+input {
+	background-color: var(--background-color);
+	outline: none;
+	width: 450px;
+	font-size: 1.2rem;
+	padding: 5px;
+	border: 1px solid;
+	border-radius: var(--border-radius);
+}
+
+.item-filter {
+	border: none;
+	border-radius: 0;
+	border-bottom: 1px solid;
+}
+
+input,
+.item-filter {
+	border-color: var(--border-color);
+}
+
+.item-input:focus {
+	outline: none;
+	border: 2.5px solid rgba(0, 207, 207, 0.667);
+}
+
+.item-filter:focus {
+	outline: none;
+	border-bottom: 2.5px solid rgba(0, 207, 207, 0.667);
+}
+
+ul {
+	width: 450px;
+	display: flex;
+	flex-wrap: wrap;
+	padding: 0;
+	gap: 10px;
+}
+
+li {
+	border: 1px solid;
+	border-color: var(--border-color);
+
+	display: flex;
+	border-radius: var(--border-radius);
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
+	width: 48.89%;
+}
+
+#clear {
+	background-color: var(--background-color);
+
+	border: 1px solid;
+	border-color: var(--border-color);
+	border-radius: var(--border-radius);
+	margin-top: 15px;
+	width: 450px;
+	padding: 7px;
+}
