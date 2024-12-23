@@ -7,17 +7,63 @@ const itemFilter = document.querySelector(".item-filter");
 const btnClear = document.getElementById("clear");
 // press on add and item gets added to list
 
-function addItem(e) {
+// Functions
+function onclick(e) {
 	e.preventDefault();
 	if (!itemInput.value) {
 		alert("Please enter an item");
 		return;
 	}
 
-	const listItem = createItem(itemInput.value);
-	itemList.appendChild(listItem);
+	addToDom(itemInput.value.toLocaleLowerCase());
+	addToLocalStorage(itemInput.value.toLocaleLowerCase());
 	itemInput.value = null;
+}
+
+function displayItems() {
+	let itemsFromStorage = getFromLocalStorage();
+	if (itemsFromStorage.length > 0) {
+		itemsFromStorage.forEach((item) => {
+			addToDom(item);
+		});
+	} else {
+		return;
+	}
+}
+
+function addToDom(item) {
+	const listItem = createItem(item);
+	itemList.appendChild(listItem);
 	checkUi();
+}
+
+// Add items to local storage
+
+function addToLocalStorage(item) {
+	let itemsFromStorage = getFromLocalStorage();
+
+	// Check if item exists and add item to array
+	if (!itemsFromStorage.includes(item.toLowerCase())) {
+		itemsFromStorage.push(item);
+	}
+
+	// convert to JSON and add to local storage
+	localStorage.setItem("listItems", JSON.stringify(itemsFromStorage));
+}
+
+// Get items from local storage
+
+function getFromLocalStorage() {
+	let itemsFromStorage;
+
+	// Check if there are items in storage
+
+	if (localStorage.getItem("listItems") === null) {
+		itemsFromStorage = [];
+	} else {
+		itemsFromStorage = JSON.parse(localStorage.getItem("listItems"));
+	}
+	return itemsFromStorage;
 }
 
 function createItem(item) {
@@ -47,9 +93,20 @@ function createIcon(classes) {
 
 function removeItem(e) {
 	if (e.target.className === "fa-solid fa-xmark") {
+		// remove from DOM
 		e.target.parentElement.parentElement.remove();
+		removeFromStorage(e.target);
 	}
 	checkUi();
+}
+
+function removeFromStorage(item) {
+	const textItem = item.parentElement.previousSibling.textContent;
+	let itemsFromStorage = getFromLocalStorage();
+
+	itemsFromStorage = itemsFromStorage.filter((i) => i !== textItem);
+
+	localStorage.setItem("listItems", JSON.stringify(itemsFromStorage));
 }
 
 function checkUi(e) {
@@ -77,17 +134,26 @@ function clearAll(e) {
 	checkUi();
 }
 
-// function filterItems() {
-// 	const items = itemList.querySelectorAll("p");
-// 	items.forEach((i) => {
-// 		if
-// 	});
-// }
+function filterItems(e) {
+	const text = itemFilter.value.toLowerCase();
+	const items = itemList.querySelectorAll("p");
+
+	items.forEach((i) => {
+		const itemText = i.textContent.toLocaleLowerCase();
+
+		if (itemText.includes(text)) {
+			i.parentElement.style.display = "flex";
+		} else {
+			i.parentElement.style.display = "none";
+		}
+	});
+}
 
 // Event listeners
 
-formInput.addEventListener("submit", addItem);
+document.addEventListener("DOMContentLoaded", displayItems);
+formInput.addEventListener("submit", onclick);
 itemList.addEventListener("click", removeItem);
 document.addEventListener("DOMContentLoaded", checkUi);
 btnClear.addEventListener("click", clearAll);
-// itemFilter.addEventListener("input", filterItems);
+itemFilter.addEventListener("input", filterItems);
