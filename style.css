@@ -1,3 +1,6 @@
+/* =========================
+   Variables
+========================= */
 :root {
 	--border-radius: 7px;
 	--border-color: #69caf7;
@@ -5,37 +8,51 @@
 	--hover-color: rgb(0, 165, 165);
 }
 
+/* =========================
+   Global Styles
+========================= */
 body {
 	font-family: "Merienda", serif;
 	background-color: var(--background-color);
-
 	height: 100%;
 	display: flex;
 	justify-content: center;
 }
 
+/* =========================
+   Container
+========================= */
 .container {
 	margin: 50px;
 	width: 500px;
-	height: max-content;
 	border: 2px solid purple;
 	border-radius: var(--border-radius);
 	padding: 20px;
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 	gap: 25px;
 	font-weight: bold;
 }
 
+/* =========================
+   Image
+========================= */
 img {
 	width: 100px;
 }
 
+/* =========================
+   Header
+========================= */
 header {
 	display: flex;
 	align-items: center;
 }
 
+/* =========================
+   Buttons
+========================= */
 .btn-submit {
 	margin-top: 15px;
 	border: none;
@@ -43,39 +60,72 @@ header {
 	padding: 7px 15px;
 	color: white;
 	background-color: rgb(37, 37, 37);
+	transition: all 0.1s ease-in-out;
 }
 
+.btn-submit:hover {
+	box-shadow: rgba(0, 0, 0, 0.671) 3px 3px 10px;
+	transform: scale(1.07);
+}
+
+#clear {
+	background-color: var(--background-color);
+	border: 2px solid var(--border-color);
+	border-radius: var(--border-radius);
+	margin-top: 15px;
+	width: 450px;
+	padding: 7px;
+	color: red;
+	transition: all 0.1s ease-in-out;
+}
+
+#clear:hover {
+	color: black;
+	background-color: rgb(240, 58, 58);
+	border: none;
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+	transform: scale(1.07);
+}
+
+/* =========================
+   Inputs
+========================= */
 input {
 	background-color: var(--background-color);
 	outline: none;
 	width: 450px;
 	font-size: 1.2rem;
 	padding: 5px;
-	border: 1px solid;
+	border: 2px solid var(--border-color);
 	border-radius: var(--border-radius);
+	transition: all 0.15s ease-in-out;
+}
+
+.item-input:hover,
+.item-input:focus {
+	border: 2.5px solid var(--hover-color);
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .item-filter {
+	background-color: var(--background-color);
 	border: none;
 	border-radius: 0;
-	border-bottom: 1px solid;
+	border-bottom: 2px solid var(--border-color);
+	transition: all 0.15s ease-in-out;
 }
 
-input,
-.item-filter {
-	border-color: var(--border-color);
-}
+.item-filter:focus,
+.item-filter:hover {
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 6px 6px -6px,
+		rgba(0, 0, 0, 0.23) 0px 6px 6px -6px;
 
-.item-input:focus {
-	outline: none;
-	border: 2.5px solid var(--hover-color);
-}
-
-.item-filter:focus {
-	outline: none;
 	border-bottom: 2.5px solid var(--hover-color);
 }
 
+/* =========================
+   Component: List
+========================= */
 ul {
 	width: 450px;
 	display: flex;
@@ -85,52 +135,41 @@ ul {
 }
 
 li {
-	border: 1px solid;
-	border-color: var(--border-color);
-
 	display: flex;
-	border-radius: var(--border-radius);
 	justify-content: space-between;
 	align-items: center;
 	padding: 10px;
 	width: 48.89%;
+	box-sizing: border-box;
+	border: 2px solid var(--border-color);
+	border-radius: var(--border-radius);
+	transition: all 0.05s ease-in-out;
 }
 
 li:hover {
-	border: 2px solid var(--hover-color);
+	border: none;
+	outline: 2px solid var(--hover-color);
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
-#clear {
-	background-color: var(--background-color);
-
-	border: 1px solid;
-	border-color: var(--border-color);
-	border-radius: var(--border-radius);
-	margin-top: 15px;
-	width: 450px;
-	padding: 7px;
-	transition: color 0.2s;
-}
-
-#clear:hover {
-	border: 2px solid var(--hover-color);
+li i {
 	color: red;
 }
 
+/* =========================
+   Utility Classes
+========================= */
 .color-grey {
 	color: rgb(143, 143, 143);
 }
 
 .btn-remove {
 	outline: none;
-	border: 0;
+	border: none;
 	background-color: var(--background-color);
 	transition: all 0.08s ease-in-out;
 }
 
 .btn-remove:hover {
-	scale: 160%;
-}
-li i {
-	color: red;
+	transform: scale(1.6);
 }
