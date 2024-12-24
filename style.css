@@ -1,7 +1,7 @@
 :root {
 	--border-radius: 7px;
-	--border-color: #69caf7;
-	--background-color: rgba(245, 241, 236, 0.829);
+	--border-color: #4caf50;
+	--background-color: #f1f1f1;
 }
 
 body {
@@ -104,6 +104,10 @@ li {
 	margin-top: 15px;
 	width: 450px;
 	padding: 7px;
+}
+
+.color-grey {
+	color: rgb(143, 143, 143);
 }
 
 .btn-remove {

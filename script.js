@@ -5,20 +5,58 @@ const btnRemove = document.querySelector(".btn-remove");
 const itemList = document.querySelector(".item-list");
 const itemFilter = document.querySelector(".item-filter");
 const btnClear = document.getElementById("clear");
+let isOnEditMode = false;
+let currentItem;
+
 // press on add and item gets added to list
 
 // Functions
-function onclick(e) {
-	e.preventDefault();
+function onAdd(e) {
 	if (!itemInput.value) {
 		alert("Please enter an item");
 		return;
 	}
+	let textInput = itemInput.value.toLocaleLowerCase();
 
-	addToDom(itemInput.value.toLocaleLowerCase());
-	addToLocalStorage(itemInput.value.toLocaleLowerCase());
+	if (isOnEditMode && currentItem) {
+		// Remove selected item from DOM and storage
+		removeFromStorageByValue(currentItem.textContent.toLocaleLowerCase());
+		currentItem.parentElement.remove();
+
+		// Add to to DOM and storage
+		addToDom(textInput);
+		addToLocalStorage(textInput);
+		resetEditMode();
+		checkUi();
+	}
+
+	const itemsFromStorage = getFromLocalStorage();
+
+	if (itemsFromStorage.includes(textInput)) {
+		alert("This item already exists");
+		itemInput.value = null;
+		return;
+	}
+
+	addToDom(textInput);
+	addToLocalStorage(textInput);
+	textInput = null;
+	checkUi();
+}
+
+// Reset to normal add mode
+
+function resetEditMode() {
+	currentItem.classList.remove("color-grey");
+	isOnEditMode = false;
+	currentItem = null;
+
+	btnSubmit.innerHTML = '<i class="fa-solid fa-plus"></i> Add Item';
+	btnSubmit.style.backgroundColor = "";
 	itemInput.value = null;
 }
+
+// display items from storage
 
 function displayItems() {
 	let itemsFromStorage = getFromLocalStorage();
@@ -66,6 +104,8 @@ function getFromLocalStorage() {
 	return itemsFromStorage;
 }
 
+// Create list item
+
 function createItem(item) {
 	const li = document.createElement("li");
 	const p = document.createElement("p");
@@ -91,21 +131,58 @@ function createIcon(classes) {
 	return icon;
 }
 
-function removeItem(e) {
+// Handle clicks on li for remove and edit
+function onClick(e) {
 	if (e.target.className === "fa-solid fa-xmark") {
 		// remove from DOM
-		e.target.parentElement.parentElement.remove();
+		removeItemFromDOM(e.target);
 		removeFromStorage(e.target);
+	} else if (e.target.textContent === itemInput.value) {
+		resetEditMode();
+	} else if (e.target.tagName === "P") {
+		editItem(e.target);
+	} else {
+		return;
 	}
 	checkUi();
+}
+
+function editItem(item) {
+	itemInput.value = item.textContent;
+	btnSubmit.innerHTML = '<i class="fa-solid fa-pen"></i> Update Item';
+	btnSubmit.style.backgroundColor = "green";
+
+	if (currentItem) {
+		currentItem.classList.remove("color-grey");
+	}
+
+	currentItem = item;
+	currentItem.classList.add("color-grey");
+	isOnEditMode = true;
+}
+
+function removeItemFromDOM(item) {
+	// remove from DOM
+	item.parentElement.parentElement.remove();
 }
 
 function removeFromStorage(item) {
 	const textItem = item.parentElement.previousSibling.textContent;
 	let itemsFromStorage = getFromLocalStorage();
+	if (itemsFromStorage.length === 1) {
+		localStorage.clear();
+		return;
+	}
 
 	itemsFromStorage = itemsFromStorage.filter((i) => i !== textItem);
 
+	localStorage.setItem("listItems", JSON.stringify(itemsFromStorage));
+	checkUi();
+}
+
+function removeFromStorageByValue(value) {
+	let itemsFromStorage = getFromLocalStorage();
+	itemsFromStorage = itemsFromStorage.filter((item) => item !== value);
 	localStorage.setItem("listItems", JSON.stringify(itemsFromStorage));
 }
 
@@ -131,6 +208,7 @@ function clearAll(e) {
 			itemList.firstChild.remove();
 		}
 	}
+	localStorage.clear();
 	checkUi();
 }
 
@@ -152,8 +230,8 @@ function filterItems(e) {
 // Event listeners
 
 document.addEventListener("DOMContentLoaded", displayItems);
-formInput.addEventListener("submit", onclick);
-itemList.addEventListener("click", removeItem);
+formInput.addEventListener("submit", onAdd);
+itemList.addEventListener("click", onClick);
 document.addEventListener("DOMContentLoaded", checkUi);
 btnClear.addEventListener("click", clearAll);
 itemFilter.addEventListener("input", filterItems);
