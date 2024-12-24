@@ -28,6 +28,7 @@ function onAdd(e) {
 		addToLocalStorage(textInput);
 		resetEditMode();
 		checkUi();
+		return;
 	}
 
 	const itemsFromStorage = getFromLocalStorage();

@@ -1,7 +1,8 @@
 :root {
 	--border-radius: 7px;
-	--border-color: #4caf50;
-	--background-color: #f1f1f1;
+	--border-color: #69caf7;
+	--background-color: rgba(245, 241, 236, 0.829);
+	--hover-color: rgb(0, 165, 165);
 }
 
 body {
@@ -67,12 +68,12 @@ input,
 
 .item-input:focus {
 	outline: none;
-	border: 2.5px solid rgba(0, 207, 207, 0.667);
+	border: 2.5px solid var(--hover-color);
 }
 
 .item-filter:focus {
 	outline: none;
-	border-bottom: 2.5px solid rgba(0, 207, 207, 0.667);
+	border-bottom: 2.5px solid var(--hover-color);
 }
 
 ul {
@@ -95,6 +96,10 @@ li {
 	width: 48.89%;
 }
 
+li:hover {
+	border: 2px solid var(--hover-color);
+}
+
 #clear {
 	background-color: var(--background-color);
 
@@ -104,6 +109,12 @@ li {
 	margin-top: 15px;
 	width: 450px;
 	padding: 7px;
+	transition: color 0.2s;
+}
+
+#clear:hover {
+	border: 2px solid var(--hover-color);
+	color: red;
 }
 
 .color-grey {
@@ -114,8 +125,12 @@ li {
 	outline: none;
 	border: 0;
 	background-color: var(--background-color);
+	transition: all 0.08s ease-in-out;
 }
 
+.btn-remove:hover {
+	scale: 160%;
+}
 li i {
 	color: red;
 }
