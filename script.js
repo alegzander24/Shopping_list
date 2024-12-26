@@ -194,7 +194,7 @@ function checkUi(e) {
 		itemFilter.style.display = "none";
 		btnClear.style.display = "none";
 	} else {
-		itemFilter.style.display = "flex";
+		itemFilter.style.display = "grid";
 		btnClear.style.display = "block";
 	}
 }
@@ -221,7 +221,7 @@ function filterItems(e) {
 		const itemText = i.textContent.toLocaleLowerCase();
 
 		if (itemText.includes(text)) {
-			i.parentElement.style.display = "flex";
+			i.parentElement.style.display = "grid";
 		} else {
 			i.parentElement.style.display = "none";
 		}
